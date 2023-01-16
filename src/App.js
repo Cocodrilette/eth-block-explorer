@@ -1,36 +1,37 @@
-import { Alchemy, Network } from 'alchemy-sdk';
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
-import './App.css';
+import { Ethereum } from "./lib/eth";
+import Blocks from "./components/Blocks";
+import Header from "./components/Header";
+import Search from "./components/Search";
 
-// Refer to the README doc for more information about using API
-// keys in client-side code. You should never do this in production
-// level code.
-const settings = {
-  apiKey: process.env.REACT_APP_ALCHEMY_API_KEY,
-  network: Network.ETH_MAINNET,
-};
-
-
-// In this week's lessons we used ethers.js. Here we are using the
-// Alchemy SDK is an umbrella library with several different packages.
-//
-// You can read more about the packages here:
-//   https://docs.alchemy.com/reference/alchemy-sdk-api-surface-overview#api-surface
-const alchemy = new Alchemy(settings);
+const provider = new Ethereum();
 
 function App() {
-  const [blockNumber, setBlockNumber] = useState();
+  const [latestsBlocks, setLatestBlocks] = useState();
 
   useEffect(() => {
-    async function getBlockNumber() {
-      setBlockNumber(await alchemy.core.getBlockNumber());
+    async function getLatestsBlocks() {
+      const latestsBlocks = await provider.getLatestBlocks();
+      setLatestBlocks(latestsBlocks);
     }
+    getLatestsBlocks();
+  }, []);
 
-    getBlockNumber();
-  });
-
-  return <div className="App">Block Number: {blockNumber}</div>;
+  return (
+    <div>
+      <Header />
+      <main>
+        <section>
+          <Search />
+        </section>
+        <section className="flex flex-col gap-3 mb-20 bg-slate-50 shadow-md p-5 rounded-md">
+          <h2 className="text-3xl">Latests blocks</h2>
+          <Blocks latestsBlocks={latestsBlocks} />
+        </section>
+      </main>
+    </div>
+  );
 }
 
 export default App;

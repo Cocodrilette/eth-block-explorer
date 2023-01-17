@@ -8,8 +8,14 @@ export default function Transactions({ txHash }) {
 
   const getTx = async (txHash) => {
     const tx = await provider.getTransactionByHash(txHash);
-    console.log(tx);
     setTxInfo(tx);
+  };
+
+  const parseEther = async (value) => {
+    const ethersProvider = await provider.config.getProvider();
+    const parsed = await ethersProvider.utils.formatUnits(value);
+    console.log(parsed);
+    return parsed;
   };
 
   const tx = () => {
@@ -35,11 +41,11 @@ export default function Transactions({ txHash }) {
           </p>
           <p className="border-b border-slate-400 py-2">
             <span className="font-semibold">Gas used:</span>{" "}
-            {gasUsed.toNumber()}
+            {gasUsed.toNumber()} Gwei
           </p>
           <p className="py-2">
             <span className="font-semibold">Gas price:</span>{" "}
-            {effectiveGasPrice.toNumber()}
+            {effectiveGasPrice.toNumber()} Gwei
           </p>
         </div>
       );

@@ -37,6 +37,10 @@ export class Ethereum {
   async getTransactionByHash(txHash) {
     return await this.ethProvider.core.getTransactionReceipt(txHash);
   }
+
+  async parseGweiToEth(amount) {
+    return await this.ethProvider.core.utils.fromWei(amount, "gwei");
+  }
 }
 
 export const provider = new Ethereum();

@@ -1,6 +1,6 @@
 # Ethereum Block Explorer
 
-![Preview](https://github.com/Cocodrilette/eth-block-explorer/tree/main/public/preview.png)
+![Preview](/public/preview.png)
 
 The lessons this week covered the Ethereum JSON-RPC API and the `ethers.js` library giving us the ability to query the Ethereum blockchain and make transactions!
 

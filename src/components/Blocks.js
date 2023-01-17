@@ -14,7 +14,7 @@ export default function Blocks({ latestsBlocks }) {
     }
 
     return (
-      <div className="flex flex-col">
+      <div className="flex flex-col gap-2">
         <AiOutlineLoading3Quarters className="animate-spin m-auto" />
         <p className="m-auto">Getting blocks...</p>
       </div>

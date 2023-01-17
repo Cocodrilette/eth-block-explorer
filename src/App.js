@@ -1,11 +1,9 @@
 import { useEffect, useState } from "react";
 
-import { Ethereum } from "./lib/eth";
 import Blocks from "./components/Blocks";
 import Header from "./components/Header";
-import Search from "./components/Search";
-
-const provider = new Ethereum();
+// import Search from "./components/Search";
+import { provider } from "./lib/eth";
 
 function App() {
   const [latestsBlocks, setLatestBlocks] = useState();
@@ -22,9 +20,9 @@ function App() {
     <div>
       <Header />
       <main>
-        <section>
+        {/* <section>
           <Search />
-        </section>
+        </section> */}
         <section className="flex flex-col gap-3 mb-20 bg-slate-50 shadow-md p-5 rounded-md">
           <h2 className="text-3xl">Latests blocks</h2>
           <Blocks latestsBlocks={latestsBlocks} />

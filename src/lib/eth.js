@@ -10,19 +10,19 @@ export class Ethereum {
 
   #latestsBlock = [];
 
-  async getBlockNumber() {
+  async #getBlockNumber() {
     return await this.ethProvider.core.getBlockNumber();
   }
 
-  async getBlock(blockNumber) {
+  async getBlockByNumber(blockNumber) {
     return await this.ethProvider.core.getBlock(blockNumber);
   }
 
-  async setLatestBlock() {
-    const latestBlock = await this.getBlockNumber();
+  async #setLatestBlock() {
+    const latestBlock = await this.#getBlockNumber();
     let blocks = [];
     for (let i = latestBlock; i > latestBlock - 10; i--) {
-      const block = await this.getBlock(i);
+      const block = await this.getBlockByNumber(i);
       blocks.push(block);
     }
 
@@ -30,7 +30,13 @@ export class Ethereum {
   }
 
   async getLatestBlocks() {
-    await this.setLatestBlock();
+    await this.#setLatestBlock();
     return this.#latestsBlock;
   }
+
+  async getTransactionByHash(txHash) {
+    return await this.ethProvider.core.getTransactionReceipt(txHash);
+  }
 }
+
+export const provider = new Ethereum();

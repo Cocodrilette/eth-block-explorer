@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-
 import { BiDownArrow, BiUpArrow } from "react-icons/bi";
+
 import { parsedTimeElapsed } from "../lib/utils";
+import Transactions from "./Transactions";
 
 export default function Block({ block }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -11,7 +12,11 @@ export default function Block({ block }) {
     const { number, hash, miner, parentHash, gasLimit, gasUsed } = block;
 
     return (
-      <div className="flex flex-col my-3 p-3 border-2 gap-3">
+      <div
+        className={`flex flex-col my-3 p-3 border-2 gap-3 ${
+          isOpen ? "border-black" : null
+        } transition-all`}
+      >
         <div className="flex justify-between">
           <div>
             <div className="flex gap-5">
@@ -24,9 +29,9 @@ export default function Block({ block }) {
           </div>
           <button onClick={() => setIsOpen(!isOpen)}>
             {isOpen ? (
-              <BiUpArrow className="toggleButtons" />
+              <BiUpArrow className="toggleButtons text-xl" />
             ) : (
-              <BiDownArrow className="toggleButtons" />
+              <BiDownArrow className="toggleButtons text-xl" />
             )}
           </button>
         </div>
@@ -49,14 +54,7 @@ export default function Block({ block }) {
               <span className="font-semibold">Gas used:</span>{" "}
               {gasUsed.toNumber()}
             </p>
-            <p className="border-b py-2">
-              <a
-                href={`transactions/block/${""}`}
-                className="text-blue-600 font-semibold"
-              >
-                Transactions
-              </a>
-            </p>
+            <Transactions transactions={block.transactions} />
           </div>
         )}
       </div>
@@ -74,7 +72,7 @@ export default function Block({ block }) {
   useEffect(() => {
     const interval = setInterval(() => {
       setTimeElapsed(parsedTimeElapsed(block.timestamp));
-    }, 1000);
+    }, 1000 * 60 * 5);
 
     return () => clearInterval(interval);
   }, [block]);

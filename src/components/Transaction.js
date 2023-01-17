@@ -11,13 +11,6 @@ export default function Transactions({ txHash }) {
     setTxInfo(tx);
   };
 
-  const parseEther = async (value) => {
-    const ethersProvider = await provider.config.getProvider();
-    const parsed = await ethersProvider.utils.formatUnits(value);
-    console.log(parsed);
-    return parsed;
-  };
-
   const tx = () => {
     if (txInfo) {
       const { from, to, gasUsed, confirmations, effectiveGasPrice, byzantium } =
